@@ -1,0 +1,844 @@
+---
+title: "Organising GitHub for Reproducibility<br>and Lab Onboarding"
+subtitle: "Designing repositories for future humans · GitHub Training Series"
+author: "Patrícia Rodrigues · UK DRI @ Cardiff"
+date: "26 March 2026"
+format:
+  ukdri-revealjs:
+    smaller: true
+---
+
+## Today's session {background-color="#00326e"}
+
+::: {.columns}
+::: {.column width="60%"}
+**By the end of this hour you will:**
+
+- Understand why repo structure matters for reproducibility
+- Know the minimal elements of a well-organised research repository
+- Have a template you can copy for your next project
+- Know how to use GitHub to onboard new lab members
+
+**No Git commands today.**
+This session is about design, not tooling.
+:::
+:::
+
+
+---
+
+## Scope — what we will and won't cover
+
+::: {.columns}
+::: {.column width="55%"}
+**We will cover**
+
+- Repository organisation and structure
+- A minimal reproducible project template
+- Writing documentation for onboarding
+- Practical conventions for research teams
+:::
+::: {.column width="45%"}
+**We will not cover**
+
+- Git basics or command line
+- Branching strategies
+- Continuous integration / automation
+- Advanced GitHub workflows
+
+*Those topics are covered in other sessions — links at the end.*
+:::
+:::
+
+
+---
+
+## Part 1 · The Problem {background-color="#00326e"}
+
+---
+
+## What a typical research repo looks like
+
+::: {.columns}
+::: {.column width="50%"}
+```
+my_project/
+├── analysis_final.R
+├── analysis_final_v2.R
+├── analysis_FINAL_USE_THIS.R
+├── data.csv
+├── data_old.csv
+├── data2.csv
+├── figures/
+│   ├── plot1.png
+│   ├── plot_new.png
+│   └── plot_for_paper.png
+├── scratch.R
+└── notes.txt
+```
+:::
+::: {.column width="50%"}
+**What does this repo say to a new starter?**
+
+. . .
+
+- Which file should I run?
+- Which data is current?
+- What do the figures mean?
+- Where do I put my own work?
+
+. . .
+
+*Nobody can answer these questions when the original author has left.*
+:::
+:::
+
+
+---
+
+## The real cost
+
+::: {.columns}
+::: {.column width="60%"}
+**When a new person joins:**
+
+- Spends days figuring out the project structure
+- Asks questions the PI doesn't have time to answer
+- Makes a copy of the wrong file and introduces silent errors
+
+. . .
+
+**When someone leaves:**
+
+- Knowledge walks out the door with them
+:::
+::: {.column width="40%"}
+> "It worked when I ran it."
+
+> "The person who set this up left in January."
+
+> "I think the data is in a folder on their old laptop."
+
+*These are not edge cases.*
+:::
+:::
+
+
+---
+
+## The real cost, six months later
+
+::: {.columns}
+::: {.column width="60%"}
+**When you come back after 6 months:**
+
+- Can't remember which script does what
+- Can't reproduce a figure from a paper
+- Lose time re-learning your own work
+:::
+::: {.column width="40%"}
+**What this really means:**
+
+- Delays for new starters
+- Repeated questions for senior staff
+- Fragile projects that depend on memory
+
+. . .
+
+*Poor structure is a time cost, not just a tidy-up problem.*
+:::
+:::
+
+
+---
+
+## The key idea
+
+> *"Your most important collaborator is your future self six months from now."*
+
+. . .
+
+**Reproducibility and onboarding are the same problem.**
+
+. . .
+
+Both are about **handing work to someone else**.
+
+Often that "someone else" is **future-you**.
+
+. . .
+
+::: {.columns}
+::: {.column width="50%"}
+**Reproducibility** means:
+
+Someone else can take your work and get the same result.
+:::
+::: {.column width="50%"}
+**Onboarding** means:
+
+Someone new can understand your work and continue it.
+:::
+:::
+
+. . .
+
+**The solution to both is the same: a well-designed repository.**
+
+
+---
+
+## Part 2 · Three Principles {background-color="#00326e"}
+
+---
+
+## Principle 1 · Structure beats memory
+
+::: {.columns}
+::: {.column width="60%"}
+You cannot rely on people remembering how a project works.
+
+- The PI is busy
+- The original postdoc has left
+- Even you will forget in six months
+
+. . .
+
+**A clear directory structure makes a project understandable even without the author.**
+
+The structure itself communicates:
+
+- Where things live
+- What belongs where
+- What the project is doing
+:::
+::: {.column width="40%"}
+**Compare:**
+
+A repo where you have to ask someone what to run.
+
+vs.
+
+A repo where you open it and immediately see `README.md`, `03_data/`, `04_data_analysis/`, `05_figures/`.
+
+. . .
+
+*One of these is a gift to future collaborators.*
+:::
+:::
+
+
+---
+
+## Principle 2 · One project ≠ one person
+
+::: {.columns}
+::: {.column width="60%"}
+Research repositories are often built as if only one person will ever use them.
+
+- No README
+- No explanation of how to run the analysis
+- Folder names that only make sense to the author
+
+. . .
+
+**Repositories should be designed for collaboration and handover, not individual workflows.**
+
+Even if you work alone today, you will eventually:
+
+- Have a new student join
+- Collaborate with someone from outside your group
+- Hand the project to someone else
+:::
+::: {.column width="40%"}
+**Ask yourself:**
+
+*Could someone who doesn't know me get started in this repository with no help from me?*
+
+. . .
+
+If the answer is no — that's the problem to fix.
+:::
+:::
+
+
+---
+
+## Principle 3 · Onboarding is part of reproducibility
+
+::: {.columns}
+::: {.column width="60%"}
+Reproducibility is often framed as a technical problem:
+
+- Use version control
+- Record your environment
+- Write clean code
+
+. . .
+
+**If a new researcher cannot tell how to start, the project is not truly reproducible.**
+
+Onboarding documentation is part of reproducibility, not optional extra work.
+:::
+::: {.column width="40%"}
+**Onboarding documentation answers:**
+
+- What is this project?
+- How do I run it?
+- Where do I put my own work?
+- Who do I ask if I have a question?
+- What are the conventions we use here?
+
+*A 30-minute investment in writing this saves days of confusion later.*
+:::
+:::
+
+
+---
+
+## Part 3 · The Minimal Template {background-color="#00326e"}
+
+---
+
+## The smallest structure that works
+
+::: {.columns}
+::: {.column width="50%"}
+```
+lab-repo/
+├── README.md
+├── docs/
+│   └── onboarding.md
+└── projects/
+    └── project-template/
+        ├── README.md
+        ├── 01-Project_management/
+        ├── 02_material_methods/
+        ├── 03_data/
+        │   ├── 001_rawdata/
+        │   └── 990_processed_data/
+        ├── 04_data_analysis/
+        ├── 05_figures/
+        ├── 06_dissemination/
+        └── 07_miscellaneous/
+```
+:::
+::: {.column width="50%"}
+**Three things every lab repo needs:**
+
+1. A **README** — what this is and how to start
+2. An **onboarding doc** — expectations and conventions
+3. A **project template** — a consistent GIN-Tonic-style structure for each analysis
+
+. . .
+
+*That's it. You don't need more than this to start.*
+:::
+:::
+
+
+---
+
+## `README.md` — the front door
+
+::: {.columns}
+::: {.column width="55%"}
+**The README is the first file anyone reads.**
+
+It should answer:
+
+- What is this repository?
+- Who maintains it?
+- How do I get started?
+- Where do I find things?
+
+. . .
+
+**A README does not need to be long.**
+
+Four sections. Plain English. No jargon.
+
+The template has a fill-in-the-blanks structure — you just replace the placeholders.
+:::
+::: {.column width="45%"}
+**Minimal README structure:**
+
+```markdown
+# Lab Name — Research Repository
+
+Short description of the lab and
+what this repository is for.
+
+## Getting started
+
+Point to onboarding.md.
+
+## Repository structure
+
+Brief explanation of the
+top-level folders.
+
+## Contact
+
+Who to ask for help.
+```
+:::
+:::
+
+
+---
+
+## `docs/onboarding.md` — the welcome guide
+
+::: {.columns}
+::: {.column width="55%"}
+**The onboarding document is for new people joining the lab.**
+
+It should explain:
+
+- What we work on (the science context)
+- How we use this repository
+- Conventions we follow (naming files, committing, reviewing)
+- Where to ask questions
+
+. . .
+
+**Write it as if you're talking to someone on their first day.**
+
+Not as formal documentation — as a friendly guide.
+:::
+::: {.column width="45%"}
+**Key sections:**
+
+- Welcome and context
+- How to get set up
+- Repository conventions
+- Who to contact for what
+
+. . .
+
+*If you find yourself re-explaining the same things to every new starter — that belongs in this file.*
+:::
+:::
+
+
+---
+
+## `projects/project-template/` — the analysis scaffold
+
+::: {.columns}
+::: {.column width="50%"}
+```
+project-template/
+├── README.md
+├── 01-Project_management/
+├── 02_material_methods/
+├── 03_data/
+│   ├── 001_rawdata/        ← never modify this
+│   └── 990_processed_data/ ← generated by scripts
+├── 04_data_analysis/       ← analysis code and notebooks
+├── 05_figures/             ← generated outputs to share
+├── 06_dissemination/
+└── 07_miscellaneous/       ← environment files and extras
+```
+:::
+::: {.column width="50%"}
+**Key conventions:**
+
+- Keep the GIN-Tonic top-level numbering unchanged
+- `03_data/001_rawdata/` is **read-only** — never overwrite source data
+- Analysis code lives in `04_data_analysis/`
+- Use the same numbering for analysis steps: `001_cleaning.R`, `002_model.R`
+- Generated outputs go in `05_figures/` or `03_data/990_processed_data/`
+- Environment files can live in `07_miscellaneous/`
+
+. . .
+
+*Copy this folder for every new project. Give it a meaningful name.*
+:::
+:::
+
+
+---
+
+## Setting up the structure — two ways
+
+::: {.columns}
+::: {.column width="50%"}
+**Option A — Copy on GitHub**
+
+1. Open `https://github.com/UKDRI/ukdri-repro-template`
+2. Click **Use this template**
+3. Create a new repository from the template
+4. Rename and adapt it for your project
+
+*No command line needed.*
+
+. . .
+
+**Works well for:** people new to the terminal, or one-off projects.
+:::
+::: {.column width="50%"}
+**Option B — One script**
+
+```bash
+bash new-project.sh my-analysis-name
+```
+
+Creates everything instantly:
+
+```
+my-analysis-name/
+├── README.md
+├── 01-Project_management/
+├── 02_material_methods/
+├── 03_data/
+│   ├── 001_rawdata/
+│   └── 990_processed_data/
+├── 04_data_analysis/
+├── 05_figures/
+├── 06_dissemination/
+└── 07_miscellaneous/
+```
+
+*Script is in the template repo. Run it once per project.*
+:::
+:::
+
+
+---
+
+## Environment capture — where it goes
+
+::: {.columns}
+::: {.column width="55%"}
+**"It worked on my machine"** is one of the most common reproducibility failures.
+
+In this template, environment files live in `07_miscellaneous/` so they are easy to find and keep with the project.
+
+. . .
+
+**What goes here depends on your tools:**
+
+| Tool | File |
+|------|------|
+| R | `renv.lock` (from `renv`) |
+| Python | `requirements.txt` or `environment.yml` |
+| R + Python | Both |
+| Containers | `Dockerfile` |
+
+. . .
+
+**You don't need all of these.** Start with the one that fits your workflow.
+:::
+::: {.column width="45%"}
+**Minimum viable environment capture:**
+
+For R:
+```r
+# Run once when you set up the project
+install.packages("renv")
+renv::init()
+```
+
+For Python:
+```bash
+# Save your current packages
+pip freeze > requirements.txt
+```
+
+. . .
+
+*Record this early. Retrofitting environment capture is painful.*
+:::
+:::
+
+
+---
+
+## Best practices that prevent chaos
+
+::: {.columns}
+::: {.column width="55%"}
+**Naming and file conventions**
+
+- Number analysis steps clearly: `001_cleaning.R`, `002_qc.R`, `003_model.R`
+- Use one naming style consistently: lowercase with underscores is usually safest
+- Use descriptive names, not `final_v2_really_final.R`
+- Avoid spaces and special characters in file names
+- Keep one idea per file name: `manhattan_plot.png`, not `plot_new_latest.png`
+- Keep dates in `YYYY-MM-DD` format when you need dated outputs
+:::
+::: {.column width="45%"}
+**Documentation and tracking**
+
+- Add a short `README.md` to major directories
+- Comment **why** a step exists, not only **what** the code does
+- Record important thresholds, filters, and random seeds
+- Keep a simple analysis catalogue with: analysis ID, purpose, input data, main script, status, and output location
+
+*Small conventions reduce repeated confusion later.*
+:::
+:::
+
+
+---
+
+## Best practices that prevent chaos, continued
+
+::: {.columns}
+::: {.column width="55%"}
+**Data and output rules**
+
+- Never overwrite raw data
+- Keep generated data separate from source data
+- Avoid overwriting important outputs
+- Create versioned output files when needed
+- Use relative paths so the project still works when moved
+:::
+::: {.column width="45%"}
+**Quick checks**
+
+- Can a new person tell what each script is for?
+- Can they see which file runs first?
+- Can they tell which files are source data and which are generated?
+- Can they rerun the project on another machine?
+
+*If not, the structure still needs work.*
+:::
+:::
+
+
+---
+
+## Part 4 · Live Walkthrough {background-color="#00326e"}
+
+---
+
+## The UKDRI lab template
+
+**Example repository to review after the session**
+
+```
+https://github.com/UKDRI/ukdri-repro-training
+```
+
+::: {.columns}
+::: {.column width="50%"}
+**Start by checking:**
+
+- The top-level structure
+- How the README is written
+- The onboarding document
+- The project template folder
+:::
+::: {.column width="50%"}
+**As you review it, ask:**
+
+- Could I find my way around this quickly with no help?
+- What would I change for my own lab?
+- Which part of this could I copy today?
+:::
+:::
+
+
+---
+
+## How to review the example repository
+
+**Top-level README**
+
+- Does it answer: what is this / how do I start / where do I find things?
+- Is it short enough to actually read?
+
+. . .
+
+**`docs/onboarding.md`**
+
+- Does it explain conventions, not just tools?
+- Would a new starter feel welcomed, not overwhelmed?
+
+. . .
+
+**Project template**
+
+- Does it keep the GIN-Tonic numbered folders?
+- Is `03_data/001_rawdata/` clearly marked as read-only?
+- Is work organised under `04_data_analysis/`?
+- Are environment files easy to find in `07_miscellaneous/`?
+
+. . .
+
+*A good template passes the "new starter" test.*
+
+
+---
+
+## Part 5 · Practical Adoption {background-color="#00326e"}
+
+---
+
+## Don't refactor everything
+
+::: {.columns}
+::: {.column width="60%"}
+**The worst response to this session is:**
+
+*"My repos are a mess — I need to reorganise everything before I can start."*
+
+. . .
+
+You won't. It's too big. It won't happen.
+
+. . .
+
+**The right response is:**
+
+*"I'll apply this to my next project."*
+
+. . .
+
+Old projects can be improved incrementally — one README at a time, one renamed folder at a time.
+
+But the highest-leverage thing you can do is **start the next project correctly.**
+:::
+::: {.column width="40%"}
+**Start here:**
+
+1. Copy the project template folder
+2. Write a short README *(even if it's ugly)*
+3. Keep the numbered folder structure
+4. Treat `03_data/001_rawdata/` as read-only
+5. Add environment files early in `07_miscellaneous/`
+
+. . .
+
+*Pick one to do today.*
+:::
+:::
+
+
+---
+
+## Before you close a project
+
+**A minimal reproducibility checklist:**
+
+. . .
+
+- [ ] README explains what this is and how to run it
+- [ ] All code is in version control
+- [ ] `03_data/001_rawdata/` is untouched
+- [ ] Analysis steps in `04_data_analysis/` are numbered and commented
+- [ ] Software environment is captured in `07_miscellaneous/`
+- [ ] Important parameters or random seeds are recorded
+- [ ] An analysis catalogue or equivalent project log is up to date
+
+. . .
+
+*If all of these are true, someone else can continue your work.*
+
+
+---
+
+## The "new starter" test
+
+**Before you close your repository, ask:**
+
+. . .
+
+> Could someone who doesn't know this project find the right place to start quickly — with no help from me?
+
+. . .
+
+::: {.columns}
+::: {.column width="50%"}
+**If yes:**
+
+Your repository is well-organised enough. Carry on.
+:::
+::: {.column width="50%"}
+**If no:**
+
+One of these is missing:
+
+- A README that says how to start
+- A clear folder structure
+- An onboarding guide for newcomers
+:::
+:::
+
+. . .
+
+*Use this as a recurring check, not a one-off exercise.*
+
+
+---
+
+## Where you are now
+
+::: {.columns}
+::: {.column width="60%"}
+**After today you have:**
+
+✅ A mental model for why structure matters
+
+✅ Three principles to apply to any repository
+
+✅ A minimal template you can copy immediately
+
+✅ A single test to know if your repo is "good enough"
+
+. . .
+
+**The next step is yours.**
+
+Copy the template. Write one README.
+Start with your next project.
+:::
+::: {.column width="40%"}
+**Going further:**
+
+- Add `onboarding.md` to an existing project
+- Apply the project template folder to your current analysis
+- Run the new starter test on a repo you own
+
+. . .
+
+*You don't need to do all of this at once.*
+:::
+:::
+
+
+---
+
+## Resources
+
+**Templates and tools**
+
+- UKDRI repro template
+- Cookiecutter Data Science
+- Snakemake profiles
+- Awesome README
+- Make a README
+
+**Reproducibility guides**
+
+- British Ecological Society Guide to Reproducible Code
+- rOpenSci Reproducibility Guide
+- The Turing Way: Naming files, folders and other things
+- Good Enough Practices in Scientific Computing
+- GIN-Tonic standard
+
+. . .
+
+*Questions? Drop them in the chat or raise your hand.*
+
+
+---
+
+## Thank you {background-color="#00326e"}
+
+*Patrícia Rodrigues*
+UK Dementia Research Institute
+
